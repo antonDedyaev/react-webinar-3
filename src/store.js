@@ -41,7 +41,12 @@ class Store {
 	/**
 	 * Добавление новой записи
 	 */
+
+	// Передаем в метод начальное значение в качестве точки начала отсчета уникального кода
+	// если значение не передано, начинаем с 1
+
 	addItem(initialCode = 1) {
+		//добавляем в стейт еще одно поле - счетчик для установки уникального кода
 		this.state.codeCounter = this.state.codeCounter ?? initialCode;
 		this.setState({
 			...this.state,
@@ -69,11 +74,14 @@ class Store {
 		this.setState({
 			...this.state,
 			list: this.state.list.map((item) => {
+				// Инициализация счетчика выделений - начинаем с 0, если выделений не было
 				item.selectionCount = item.selectionCount ?? 0;
 				if (item.code === code) {
 					item.selected = !item.selected;
+					// Подсчет кол-ва выделений записи
 					item.selectionCount = item.selected ? item.selectionCount + 1 : item.selectionCount;
 				} else {
+					// Отмена выделения остальных записей при выделении одной
 					item.selected = false;
 				}
 				return item;

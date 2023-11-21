@@ -27,6 +27,7 @@ export function createElement(name, props = {}, ...children) {
 	return element;
 }
 
+// Функция для склонения слов
 export function decline(count, declineOptions) {
 	const many = count % 100;
 	const few = count % 10;

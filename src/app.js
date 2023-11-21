@@ -31,7 +31,7 @@ function App({ store }) {
 							>
 								<div className='Item-code'>{item.code}</div>
 								<div className='Item-title'>
-									{item.title}{" "}
+									{item.title} {/* Отрисовка количества выделений, если оно больше 0*/}
 									{item.selectionCount > 0 &&
 										`| Выделяли ${item.selectionCount} ${decline(item.selectionCount, {
 											single: "раз",
