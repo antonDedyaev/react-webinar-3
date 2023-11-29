@@ -1,5 +1,27 @@
 .Controls {
+  height: 63px;
   display: flex;
+  align-items: center;
   justify-content: flex-end;
-  padding: 20px;
+
+  padding: 0 20px;
+
+  border-bottom: 1px dashed #ccc;
+}
+
+.Controls-Title,
+.Controls-Content {
+  font-size: 18px;
+  font-style: normal;
+  line-height: normal;
+}
+
+.Controls-Title {
+  margin-right: 15px;
+}
+
+.Controls-Content {
+  margin-right: 20px;
+
+  font-weight: 700;
 }
