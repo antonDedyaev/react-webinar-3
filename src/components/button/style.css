@@ -1,0 +1,7 @@
+.Button {
+  width: 76px;
+  display: flex;
+  justify-content: center;
+
+  cursor: pointer;
+}

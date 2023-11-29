@@ -1,0 +1,15 @@
+.Cart {
+  width: 960px;
+}
+
+.Cart-Summary {
+  display: flex;
+  justify-content: flex-end;
+  gap: 53px;
+  margin: 20px 120px 89px;
+
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
