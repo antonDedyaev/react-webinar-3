@@ -1,0 +1,42 @@
+.LanguageSwitcher {
+  display: flex;
+  margin-right: 20px;
+  margin-left: auto;
+  padding: 9px 6px;
+  background: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.LanguageSwitcher-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  line-height: 100%;
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+.LanguageSwitcher-content::before {
+  content: "";
+  position: absolute;
+  top: -9px;
+  left: -6px;
+
+  width: 34px;
+  height: 34px;
+  opacity: 0.4;
+  background: #535353;
+  border-radius: 5px;
+  transition: 0.4s;
+}
+
+.left::before {
+  left: -6px;
+}
+
+.right::before {
+  left: calc(100% - 28px);
+}
