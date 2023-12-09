@@ -6,3 +6,8 @@
   margin-right: auto;
   color: #0087e9;
 }
+
+.MainMenu > span {
+  text-decoration: underline;
+  cursor: pointer;
+}

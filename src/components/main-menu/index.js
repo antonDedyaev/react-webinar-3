@@ -1,28 +1,37 @@
 import { memo } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { cn as bem } from "@bem-react/classname";
 import { getLocale } from "../../utils";
 import * as locales from "../../app/locales/exports";
 import "./style.css";
 
-function MainMenu({ language }) {
+function MainMenu(props) {
+  const navigate = useNavigate();
   const cn = bem("MainMenu");
-  const { page } = getLocale(language, locales);
+  const { page } = getLocale(props.language, locales);
+
+  const clickHandler = () => {
+    // Сбрасываем пагинацию при клике по ссылке
+    props.setCurrentPage(1);
+    navigate("/");
+  };
 
   return (
-    <Link className={cn()} to="/">
-      {page.main}
-    </Link>
+    <nav className={cn()}>
+      <span onClick={clickHandler}>{page.main}</span>
+    </nav>
   );
 }
 
 MainMenu.propTypes = {
   language: PropTypes.string,
+  setCurrentPage: PropTypes.func,
 };
 
 MainMenu.defaultProps = {
   language: "ru",
+  setCurrentPage: () => {},
 };
 
 export default memo(MainMenu);

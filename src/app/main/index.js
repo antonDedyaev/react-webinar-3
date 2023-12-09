@@ -38,7 +38,7 @@ function Main() {
     } finally {
       setIsLoading(false);
     }
-  }, [select.currentPage, select.language]); // Рендерим каждый раз, когда меняется текущая страница
+  }, [select.currentPage, select.language]); // Рендерим каждый раз, когда меняется текущая страница и язык
 
   const callbacks = {
     // Добавление в корзину
@@ -83,7 +83,7 @@ function Main() {
         language={select.language}
         switchLanguage={callbacks.switchLanguage}
       />
-      <MainMenu language={select.language} />
+      <MainMenu language={select.language} setCurrentPage={callbacks.setPage} />
       <BasketTool
         onOpen={callbacks.openModalBasket}
         amount={select.amount}

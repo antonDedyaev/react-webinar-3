@@ -70,6 +70,10 @@ function ArticlePage() {
       () => store.actions.modals.close("basket"),
       [store]
     ),
+    setPage: useCallback(
+      (page) => store.actions.catalog.setCurrentPage(page),
+      [store]
+    ),
     switchLanguage: useCallback(
       (language) => store.actions.language.setLanguage(language),
       [store]
@@ -85,7 +89,7 @@ function ArticlePage() {
         language={select.language}
         switchLanguage={callbacks.switchLanguage}
       />
-      <MainMenu language={select.language} />
+      <MainMenu language={select.language} setCurrentPage={callbacks.setPage} />
       <BasketTool
         onOpen={callbacks.openModalBasket}
         amount={select.amount}
