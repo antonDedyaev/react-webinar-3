@@ -12,6 +12,11 @@ export const ru = {
   },
   cartControl: {
     cartContent: "В корзине",
+    article: {
+      one: "товар",
+      few: "товара",
+      many: "товаров",
+    },
     cartEmpty: "пусто",
     cartOpen: "Перейти",
     cartClose: "Закрыть",

@@ -12,6 +12,11 @@ export const en = {
   },
   cartControl: {
     cartContent: "Total in cart",
+    article: {
+      one: "article",
+      few: "articles",
+      many: "articles",
+    },
     cartEmpty: "empty",
     cartOpen: "To cart",
     cartClose: "Close",

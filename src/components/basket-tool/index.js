@@ -8,7 +8,7 @@ import "./style.css";
 function BasketTool(props) {
   const cn = bem("BasketTool");
 
-  const { page, cartControl } = getLocale(props.language, locales);
+  const { cartControl } = getLocale(props.language, locales);
 
   return (
     <div className={cn()}>
@@ -16,9 +16,9 @@ function BasketTool(props) {
       <span className={cn("total")}>
         {props.amount
           ? `${props.amount} ${plural(props.amount, {
-              one: "товар",
-              few: "товара",
-              many: "товаров",
+              one: cartControl.article.one,
+              few: cartControl.article.few,
+              many: cartControl.article.many,
             })} / ${numberFormat(props.sum)} ₽`
           : `${cartControl.cartEmpty}`}
       </span>
