@@ -1,4 +1,4 @@
-import { memo, useCallback } from "react";
+import { memo } from "react";
 import propTypes from "prop-types";
 import { cn as bem } from "@bem-react/classname";
 import PropTypes from "prop-types";

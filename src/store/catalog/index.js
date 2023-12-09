@@ -26,7 +26,7 @@ class Catalog extends StoreModule {
       `/api/v1/articles?lang=all&limit=${perPageLimit}&skip=${skippedItems}&fields=items(_id, title, price),count`
     );
     const json = await response.json();
-    console.log(json);
+
     this.setState(
       {
         ...this.getState(),

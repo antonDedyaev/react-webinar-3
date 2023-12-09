@@ -10,6 +10,7 @@ import Pagination from "../../components/pagination";
 import Spinner from "../../components/spinner";
 import * as locales from "../locales/exports";
 import { getLocale } from "../../utils";
+import MainMenu from "../../components/main-menu";
 
 function Main() {
   //Локальный стейт для спиннера
@@ -50,6 +51,14 @@ function Main() {
       () => store.actions.modals.open("basket"),
       [store]
     ),
+    setPage: useCallback(
+      (page) => store.actions.catalog.setCurrentPage(page),
+      [store]
+    ),
+    switchLanguage: useCallback(
+      (language) => store.actions.language.setLanguage(language),
+      [store]
+    ),
   };
 
   const renders = {
@@ -69,7 +78,12 @@ function Main() {
 
   return (
     <PageLayout>
-      <Head title={page.shop} />
+      <Head
+        title={page.shop}
+        language={select.language}
+        switchLanguage={callbacks.switchLanguage}
+      />
+      <MainMenu language={select.language} />
       <BasketTool
         onOpen={callbacks.openModalBasket}
         amount={select.amount}
@@ -80,6 +94,8 @@ function Main() {
       <Pagination
         totalItems={select.totalItems}
         itemsPerPage={select.perPageLimit}
+        currentPage={select.currentPage}
+        setCurrentPage={callbacks.setPage}
       />
       {isLoading && <Spinner />};
     </PageLayout>

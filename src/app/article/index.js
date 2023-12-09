@@ -8,6 +8,7 @@ import useSelector from "../../store/use-selector";
 import ItemDetail from "../../components/item-detail";
 import loadArticle from "../services";
 import Spinner from "../../components/spinner";
+import MainMenu from "../../components/main-menu";
 
 function ArticlePage() {
   const { articleId } = useParams();
@@ -68,6 +69,10 @@ function ArticlePage() {
       () => store.actions.modals.close("basket"),
       [store]
     ),
+    switchLanguage: useCallback(
+      (language) => store.actions.language.setLanguage(language),
+      [store]
+    ),
   };
 
   return (
@@ -76,7 +81,10 @@ function ArticlePage() {
         title={
           select.language === "ru" ? articleInfo.title.ru : articleInfo.title.en
         }
+        language={select.language}
+        switchLanguage={callbacks.switchLanguage}
       />
+      <MainMenu language={select.language} />
       <BasketTool
         onOpen={callbacks.openModalBasket}
         amount={select.amount}
