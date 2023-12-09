@@ -29,13 +29,14 @@ function ArticlePage() {
   // Закрываем модалку при переходе на страницу с описанием товара
   useEffect(() => {
     callbacks.closeModalBasket();
-  }, []);
+  }, [articleId]);
 
   useEffect(() => {
     try {
       // Делаем запрос на получение данных о конкретном товаре (только нужные поля)
       const getArticleDetails = async () => {
         const data = await loadArticle(articleId);
+
         // Устанавливаем полученные данные в локальный стейт
         setArticleInfo(data);
       };
@@ -45,7 +46,7 @@ function ArticlePage() {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [articleId]);
 
   const select = useSelector((state) => ({
     amount: state.basket.amount,
