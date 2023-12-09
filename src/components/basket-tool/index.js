@@ -1,5 +1,4 @@
 import { memo } from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { cn as bem } from "@bem-react/classname";
 import { numberFormat, plural, getLocale } from "../../utils";
@@ -13,9 +12,6 @@ function BasketTool(props) {
 
   return (
     <div className={cn()}>
-      <Link className={cn("link")} to="/">
-        {page.main}
-      </Link>
       <span className={cn("label")}>{cartControl.cartContent}:</span>
       <span className={cn("total")}>
         {props.amount
