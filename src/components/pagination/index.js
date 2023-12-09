@@ -1,39 +1,24 @@
-import React, { memo, useCallback } from "react";
-import "./style.css";
-import useStore from "../../store/use-store";
-import useSelector from "../../store/use-selector";
+import React, { memo } from "react";
+import PropTypes from "prop-types";
 import { cn as bem } from "@bem-react/classname";
+import "./style.css";
 
 const Pagination = (props) => {
   const cn = bem("Pagination");
-
-  const store = useStore();
-
-  const select = useSelector((state) => ({
-    currentPage: state.catalog.currentPage,
-  }));
-
-  const callbacks = {
-    // Установка текущей страницы
-    setPage: useCallback(
-      (page) => store.actions.catalog.setCurrentPage(page),
-      [store]
-    ),
-  };
 
   const totalPages = Math.ceil(props.totalItems / props.itemsPerPage);
   const visiblePages = 1;
 
   // Собираем все номера страниц
   const getAllPages = () => {
-    let firstPage = Math.max(1, select.currentPage - visiblePages);
-    let lastPage = Math.min(totalPages, select.currentPage + visiblePages);
+    let firstPage = Math.max(1, props.currentPage - visiblePages);
+    let lastPage = Math.min(totalPages, props.currentPage + visiblePages);
 
     const pages = [];
 
-    if (select.currentPage - visiblePages > 1) {
+    if (props.currentPage - visiblePages > 1) {
       pages.push(1);
-      if (select.currentPage - visiblePages > 2) {
+      if (props.currentPage - visiblePages > 2) {
         pages.push("...");
       }
     }
@@ -42,8 +27,8 @@ const Pagination = (props) => {
       pages.push(i);
     }
 
-    if (select.currentPage + visiblePages < totalPages) {
-      if (select.currentPage + visiblePages < totalPages - 1) {
+    if (props.currentPage + visiblePages < totalPages) {
+      if (props.currentPage + visiblePages < totalPages - 1) {
         pages.push("...");
       }
       pages.push(totalPages);
@@ -54,7 +39,7 @@ const Pagination = (props) => {
 
   const handlePageClick = (page) => {
     if (page !== "...") {
-      callbacks.setPage(page);
+      props.setCurrentPage(page);
     }
   };
 
@@ -63,7 +48,7 @@ const Pagination = (props) => {
       {getAllPages().map((page, index) => (
         <button
           className={
-            page === select.currentPage
+            page === props.currentPage
               ? cn("page", { is: "active" })
               : cn("page")
           }
@@ -76,6 +61,17 @@ const Pagination = (props) => {
       ))}
     </div>
   );
+};
+
+Pagination.propTypes = {
+  totalItems: PropTypes.number,
+  itemsPerPage: PropTypes.number,
+  currentPage: PropTypes.number,
+  setCurrentPage: PropTypes.func,
+};
+
+Pagination.defaultTypes = {
+  setCurrentPage: () => {},
 };
 
 export default memo(Pagination);
