@@ -11,15 +11,16 @@ function MainMenu(props) {
   const cn = bem("MainMenu");
   const { page } = getLocale(props.language, locales);
 
-  const clickHandler = () => {
+  const clickHandler = (path = "") => {
     // Сбрасываем пагинацию при клике по ссылке
     props.setCurrentPage(1);
-    navigate("/");
+    // Для добавление других ссылок с различными путями
+    navigate(`/${path}`);
   };
 
   return (
     <nav className={cn()}>
-      <span onClick={clickHandler}>{page.main}</span>
+      <span onClick={() => clickHandler()}>{page.main}</span>
     </nav>
   );
 }
