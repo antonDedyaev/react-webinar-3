@@ -22,7 +22,7 @@ class Category extends StoreModule {
       );
       const json = await response.json();
 
-      // Приводим список в упоряждоченный вид
+      // Приводим список в упорядоченный вид
       const normalizeList = (list, parentId = null, prefix = "") => {
         const orderedList = [];
 
@@ -61,7 +61,6 @@ class Category extends StoreModule {
     } catch (e) {
       console.log(e.message);
     }
-    console.log(this.getState());
   }
 }
 

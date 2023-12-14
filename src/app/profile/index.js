@@ -21,7 +21,6 @@ function Profile() {
   const select = useSelector((state) => ({
     profile: state.user.data,
     waiting: state.user.waiting,
-    isAuthenticated: state.user.isAuthenticated,
   }));
 
   useInit(() => {

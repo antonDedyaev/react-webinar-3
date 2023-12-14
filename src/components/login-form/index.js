@@ -40,11 +40,19 @@ function LoginForm({ formData, onChange, onSubmit, errorMessage, t }) {
 }
 
 LoginForm.propTypes = {
+  formData: PropTypes.shape({
+    login: PropTypes.string,
+    password: PropTypes.string,
+  }),
+  onChange: PropTypes.func,
   onSubmit: PropTypes.func,
+  errorMessage: PropTypes.string,
   t: PropTypes.func,
 };
 
 LoginForm.defaultProps = {
+  formData: { login: "", password: "" },
+  onChange: () => {},
   onSubmit: () => {},
   t: (text) => text,
 };

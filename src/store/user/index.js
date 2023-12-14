@@ -155,7 +155,6 @@ class UserState extends StoreModule {
           data: {},
           waiting: false,
           error: null,
-          isAuthenticated: false,
         },
         "Профиль удален"
       );

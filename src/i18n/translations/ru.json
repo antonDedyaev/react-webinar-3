@@ -16,5 +16,11 @@
     "few": "товара",
     "many": "товаров",
     "other": "товара"
-  }
+  },
+  "loginForm.title": "Вход",
+  "loginForm.username": "Логин",
+  "loginForm.password": "Пароль",
+  "loginForm.login": "Войти",
+  "loginForm.logout": "Выход",
+  "profile.title": "Профиль"
 }
