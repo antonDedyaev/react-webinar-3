@@ -1,0 +1,49 @@
+.LoginForm {
+  width: 203px;
+
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 42px;
+  margin-left: 20px;
+}
+
+.LoginForm > h2 {
+  margin-bottom: 17px;
+
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.LoginForm-input {
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 20px;
+}
+
+.LoginForm-label {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.LoginForm-error {
+  margin-bottom: 20px;
+
+  color: #f00;
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.LoginForm > button {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
