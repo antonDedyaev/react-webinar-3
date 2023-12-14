@@ -33,7 +33,7 @@ class Category extends StoreModule {
           ) {
             orderedList.push({
               value: item._id,
-              title: `${prefix}${item.title}`,
+              title: `${prefix} ${item.title}`,
             });
             orderedList.push(...normalizeList(list, item._id, `${prefix}-`));
           }
