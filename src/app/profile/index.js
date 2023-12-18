@@ -10,26 +10,19 @@ import Spinner from "../../components/spinner";
 import LocaleSelect from "../../containers/locale-select";
 import Header from "../../containers/header";
 import ProfileCard from "../../components/profile-card";
-import { useNavigate } from "react-router-dom";
 
 function Profile() {
   const store = useStore();
-  const isAuthenticated = !!localStorage.getItem("currentUser");
-
-  const navigate = useNavigate();
 
   const select = useSelector((state) => ({
-    profile: state.user.data,
+    profile: state.profile.currentProfile,
+    authStatus: state.user.isAuth,
     waiting: state.user.waiting,
   }));
 
   useInit(() => {
-    if (!isAuthenticated) {
-      navigate("/login");
-    } else {
-      store.actions.user.loadProfile();
-    }
-  }, [isAuthenticated]);
+    store.actions.profile.loadProfile();
+  }, [select.isAuth]);
 
   const { t } = useTranslate();
 

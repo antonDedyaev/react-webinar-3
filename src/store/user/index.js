@@ -6,8 +6,9 @@ import StoreModule from "../module";
 class UserState extends StoreModule {
   initState() {
     return {
-      data: {},
+      currentUser: {},
       waiting: false, // признак ожидания загрузки
+      isAuth: false, // признак авторизации
       error: null,
     };
   }
@@ -20,8 +21,9 @@ class UserState extends StoreModule {
   async login(credentials) {
     // Сброс текущего профиля и установка признака ожидания загрузки
     this.setState({
-      data: {},
+      currentUser: {},
       waiting: true,
+      isAuth: false,
       error: null,
     });
 
@@ -37,88 +39,32 @@ class UserState extends StoreModule {
         }
       );
       const json = await response.json();
-      // Если возникла ошибка, выбрасываем исключение
-      if (json.error) throw json.error;
+      // Если возникла ошибка, выбрасываем исключение с текстом ошибки
+      if (json.error) throw json.error.data.issues[0].message;
 
       // Пользователь успешно авторизовался
       const { token, user } = json.result;
-      // Сохраняем имя текущего пользователя и его токен
-      localStorage.setItem(
-        "currentUser",
-        JSON.stringify({ id: user.id, username: user.profile.name, token })
-      );
+      // Сохраняем токен
+      localStorage.setItem("token", JSON.stringify(token));
+
       this.setState(
         {
-          data: {
-            ...this.getState().data,
+          currentUser: {
             username: user.profile.name,
           },
           waiting: false,
+          isAuth: true,
           error: null,
         },
         "Профиль загружен"
       );
-    } catch (e) {
+    } catch (error) {
       // Сохраняем ошибку в стейт
       this.setState({
+        ...this.getState(),
         waiting: false,
-        error: e.message,
-      });
-    }
-  }
-
-  /**
-   * Получение профиля
-   * @return {Promise<void>}
-   */
-
-  async loadProfile() {
-    this.setState({
-      data: {},
-      waiting: true,
-      error: null,
-    });
-
-    const savedToken = localStorage.getItem("currentUser");
-    const validToken = savedToken && JSON.parse(savedToken).token;
-
-    try {
-      const response = await fetch(
-        "/api/v1/users/self?fields=_id,profile(name,phone),email",
-        {
-          method: "GET",
-          headers: {
-            "X-Token": validToken,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const json = await response.json();
-      // Если возникла ошибка, выбрасываем исключение
-      if (json.error) throw json.error;
-
-      // Данные профиля подгрузились
-      const { email, profile } = json.result;
-
-      this.setState(
-        {
-          ...this.getState(),
-          data: {
-            username: profile.name,
-            phone: profile.phone,
-            email,
-          },
-          waiting: false,
-        },
-        "Профиль загружен"
-      );
-    } catch (e) {
-      console.log("error");
-      // Сохраняем ошибку в стейт
-      this.setState({
-        data: {},
-        waiting: false,
-        error: e.message,
+        isAuth: false,
+        error,
       });
     }
   }
@@ -135,38 +81,76 @@ class UserState extends StoreModule {
       error: null,
     });
 
-    const savedToken = localStorage.getItem("currentUser");
-    const validToken = savedToken && JSON.parse(savedToken).token;
-
     try {
       const response = await fetch("/api/v1/users/sign", {
         method: "DELETE",
         headers: {
-          "X-Token": validToken,
+          "X-Token": JSON.parse(localStorage.getItem("token")),
           "Content-Type": "application/json",
         },
       });
       const json = await response.json();
       // Если возникла ошибка, выбрасываем исключение
-      if (json.error) throw json.error;
+      if (json.error) throw json.error.data.issues[0].message;
       // Успешный сброс авторизации
       this.setState(
         {
-          data: {},
+          currentUser: {},
           waiting: false,
+          isAuth: false,
           error: null,
         },
         "Профиль удален"
       );
       // Удаляем данные из хранилища
-      localStorage.removeItem("currentUser");
-    } catch (e) {
-      console.log("error");
+      localStorage.removeItem("token");
+    } catch (error) {
       // Сохраняем ошибку в стейт
       this.setState({
         ...this.getState(),
         waiting: false,
-        error: e.message,
+        error,
+      });
+    }
+  }
+
+  async validateSession() {
+    this.setState({
+      ...this.getState(),
+      waiting: true,
+      error: null,
+    });
+
+    try {
+      // Если токен есть и он валиден, то должны вернуться данные
+      const response = await fetch(
+        "/api/v1/users/self?fields=_id,profile(name)",
+        {
+          method: "GET",
+          headers: {
+            "X-Token": JSON.parse(localStorage.getItem("token")),
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const json = await response.json();
+      console.log("validate", json);
+      // Если возникла ошибка, выбрасываем исключение
+      if (json.error) throw json.error.data.issues[0].message;
+
+      this.setState({
+        currentUser: {
+          username: json.result.profile.name,
+        },
+        waiting: false,
+        isAuth: true,
+        error: null,
+      });
+    } catch (error) {
+      this.setState({
+        ...this.getState(),
+        waiting: false,
+        error,
       });
     }
   }
