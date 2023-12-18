@@ -134,7 +134,6 @@ class UserState extends StoreModule {
         }
       );
       const json = await response.json();
-      console.log("validate", json);
       // Если возникла ошибка, выбрасываем исключение
       if (json.error) throw json.error.data.issues[0].message;
 

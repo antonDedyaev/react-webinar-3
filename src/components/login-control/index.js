@@ -1,21 +1,21 @@
 import { memo } from "react";
 import PropTypes from "prop-types";
 import SideLayout from "../side-layout";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { cn as bem } from "@bem-react/classname";
 import "./style.css";
 
-function LoginControl({ username, login, logout, t }) {
+function LoginControl({ username, authStatus, login, logout, t }) {
   const cn = bem("LoginControl");
 
   return (
     <SideLayout side="end">
-      {username ? (
+      {authStatus ? (
         <div className={cn()}>
           <Link className={cn("link")} to="/profile">
             {username}
           </Link>
-          <button onClick={() => logout()}>{t("loginForm.logout")}</button>
+          <button onClick={logout}>{t("loginForm.logout")}</button>
         </div>
       ) : (
         <button className={cn()} onClick={() => login()}>
@@ -28,6 +28,7 @@ function LoginControl({ username, login, logout, t }) {
 
 LoginControl.propTypes = {
   username: PropTypes.string,
+  authStatus: PropTypes.bool,
   login: PropTypes.func,
   logout: PropTypes.func,
   t: PropTypes.func,
@@ -35,6 +36,7 @@ LoginControl.propTypes = {
 
 LoginControl.defaultProps = {
   username: "",
+  authStatus: false,
   login: () => {},
   logout: () => {},
   t: (text) => text,

@@ -9,15 +9,16 @@ import LocaleSelect from "../../containers/locale-select";
 import LoginForm from "../../components/login-form";
 import Header from "../../containers/header";
 import useInit from "../../hooks/use-init";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Login() {
   const store = useStore();
   const navigate = useNavigate();
-  const isAuthenticated = !!localStorage.getItem("currentUser");
+  const location = useLocation();
+  const sourcePage = location.state ? location.state.address : "/profile";
 
   const select = useSelector((state) => ({
-    profile: state.user.data,
+    authStatus: state.user.isAuth,
     errorMessage: state.user.error,
   }));
 
@@ -28,11 +29,8 @@ function Login() {
 
   useInit(() => {
     store.actions.user.resetError();
-  }, []);
-
-  useInit(() => {
-    isAuthenticated ? navigate("/profile") : navigate("/login");
-  }, [select.profile]);
+    select.authStatus && navigate(sourcePage);
+  }, [select.authStatus]);
 
   const callbacks = {
     handleInputChange: useCallback(

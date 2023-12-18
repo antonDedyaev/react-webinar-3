@@ -10,11 +10,16 @@ function Header() {
   const navigate = useNavigate();
 
   const select = useSelector((state) => ({
-    username: state.user.data?.username,
+    username: state.user.currentUser.username,
+    authStatus: state.user.isAuth,
   }));
 
   const callbacks = {
-    login: useCallback(() => navigate("/login"), [store]),
+    login: useCallback(
+      () =>
+        navigate("/login", { state: { address: window.location.pathname } }),
+      [store]
+    ),
     logout: useCallback(() => store.actions.user.logout(), [store]),
   };
 
@@ -23,6 +28,7 @@ function Header() {
   return (
     <LoginControl
       username={select.username}
+      authStatus={select.authStatus}
       login={callbacks.login}
       logout={callbacks.logout}
       t={t}
