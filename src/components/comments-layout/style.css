@@ -1,0 +1,9 @@
+.CommentsLayout {
+  display: flex;
+  flex-direction: column;
+
+  padding: 30px 40px 92px;
+}
+.CommentsLayout > :last-child > .CommentForm {
+  margin-top: 0;
+}

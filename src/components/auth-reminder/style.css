@@ -1,0 +1,12 @@
+.AuthReminder {
+  color: #000;
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.AuthReminder > a:last-child {
+  margin-left: 5px;
+}

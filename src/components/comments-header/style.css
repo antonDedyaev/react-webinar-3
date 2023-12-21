@@ -1,0 +1,16 @@
+.CommentsHeader {
+  margin-bottom: 30px;
+  color: #000;
+
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.CommentsHeader + div > .CommentCard {
+  margin-top: -5px;
+}
+.CommentsHeader + .FormWrapper {
+  margin-top: 0;
+}

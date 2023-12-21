@@ -1,0 +1,38 @@
+.CommentCard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  margin-bottom: 30px;
+
+  color: #000;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+/* 
+.CommentCard:last-child {
+  margin-bottom: 10px;
+} */
+
+.CommentCard-header {
+  display: flex;
+  gap: 10px;
+
+  color: #666;
+}
+
+.CommentCard-header span:first-child {
+  color: #000;
+  font-weight: 700;
+}
+
+.CommentCard-text {
+  margin: 0;
+  font-size: 14px;
+}
+
+.CommentCard-reply {
+  text-decoration: none;
+}
