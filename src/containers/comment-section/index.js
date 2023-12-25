@@ -32,12 +32,6 @@ function CommentSection() {
     shallowEqual
   );
 
-  const [initCount, setInitCount] = useState(select.count);
-
-  useEffect(() => {
-    setInitCount();
-  }, [select.comments]);
-
   const callbacks = {
     onChange: useCallback(
       (e) => {
