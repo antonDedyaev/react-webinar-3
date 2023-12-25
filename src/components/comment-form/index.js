@@ -25,9 +25,15 @@ function CommentForm({
         onChange={onChange}
       ></textarea>
       <div className={cn("buttons")}>
-        <button type="submit">{t("comment.submitBtn")}</button>
+        <button type="submit" disabled={!text.trim().length}>
+          {t("comment.submitBtn")}
+        </button>
         {withCancel && (
-          <button type="button" onClick={onCancel}>
+          <button
+            type="button"
+            onClick={onCancel}
+            disabled={!text.trim().length}
+          >
             {t("comments.cancel")}
           </button>
         )}

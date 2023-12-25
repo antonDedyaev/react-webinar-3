@@ -2,3 +2,7 @@ button,
 select {
   cursor: pointer;
 }
+
+button:disabled {
+  cursor: default;
+}

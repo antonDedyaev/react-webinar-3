@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { cn as bem } from "@bem-react/classname";
 import formatDate from "../../utils/formatDate";
@@ -7,9 +7,21 @@ import "./style.css";
 function CommentCard({ comment, onReply, children, t }) {
   const cn = bem("CommentCard");
 
+  const replyRef = useRef(null);
+
+  const scrollToElement = () => {
+    if (replyRef.current) {
+      replyRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  };
+
   const handleClick = (e) => {
     e.preventDefault();
     onReply(comment._id);
+    scrollToElement();
   };
 
   const formattedDate = formatDate(comment.dateCreate);
@@ -23,7 +35,7 @@ function CommentCard({ comment, onReply, children, t }) {
       <a href="" className={cn("reply")} onClick={handleClick}>
         {t("comment.reply")}
       </a>
-      {children}
+      <div ref={replyRef}>{children}</div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import useTranslate from "../../hooks/use-translate";
 import { useParams } from "react-router-dom";
 import CommentsHeader from "../../components/comments-header";
@@ -11,6 +11,8 @@ import CommentCard from "../../components/comment-card";
 import CommentForm from "../../components/comment-form";
 import buildCommentHierarchy from "../../utils/bulidHierarchy";
 import FormWrapper from "../../components/form-wrapper";
+import listToTree from "../../utils/list-to-tree";
+import treeToList from "../../utils/tree-to-list";
 
 function CommentSection() {
   const { t } = useTranslate();
@@ -63,18 +65,27 @@ function CommentSection() {
     ),
     onCancel: useCallback(() => {
       setReplyToCommentId(null);
+      setText("");
     }, [replyToCommentId]),
   };
 
   function renderComments(comments) {
     return comments.map((comment) => (
-      <FormWrapper key={comment._id}>
+      <FormWrapper
+        key={comment._id}
+        style={{ marginLeft: comment.depth < 5 && "30px" }}
+      >
         <CommentCard
           key={comment._id}
           comment={comment}
           onReply={setReplyToCommentId}
           t={t}
         >
+          {comment.children.length > 0 && (
+            <div style={{ marginLeft: comment.depth < 5 && "30px" }}>
+              {renderComments(comment.children)}
+            </div>
+          )}
           {replyToCommentId === comment._id && (
             <FormWrapper>
               {select.exists ? (
@@ -94,16 +105,15 @@ function CommentSection() {
             </FormWrapper>
           )}
         </CommentCard>
-        {comment.children.length > 0 && (
-          <div style={{ marginLeft: "30px" }}>
-            {renderComments(comment.children)}
-          </div>
-        )}
       </FormWrapper>
     ));
   }
 
   const commentsTree = buildCommentHierarchy(select.comments);
+  const comm = treeToList(listToTree(select.comments));
+  console.log("commentTreeCurr", commentsTree);
+  console.log("commentTreeNew", comm);
+
   const renderedComments = renderComments(commentsTree);
 
   return (

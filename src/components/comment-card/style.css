@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: 10px;
 
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
 
   color: #000;
   font-size: 12px;
@@ -31,8 +31,12 @@
 .CommentCard-text {
   margin: 0;
   font-size: 14px;
+
+  overflow-wrap: break-word;
 }
 
 .CommentCard-reply {
   text-decoration: none;
+
+  margin-bottom: 30px;
 }

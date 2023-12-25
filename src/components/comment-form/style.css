@@ -3,7 +3,8 @@
   flex-direction: column;
   gap: 10px;
 
-  margin-top: 20px;
+  /* margin-top: 20px; */
+  margin-bottom: 30px;
 }
 
 .CommentForm > h2 {

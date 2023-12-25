@@ -67,6 +67,9 @@ function CatalogFilter() {
     ),
   };
 
+  console.log("categories", select.categories);
+  console.log("categoriesTree", listToTree(select.categories));
+
   return (
     <SideLayout padding="medium">
       <Select
