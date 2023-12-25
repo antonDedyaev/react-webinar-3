@@ -71,9 +71,9 @@ function CommentSection() {
 
   function renderComments(comments) {
     return comments.map((comment) => (
-      <FormWrapper
+      <div
         key={comment._id}
-        style={{ marginLeft: comment.depth < 5 && "30px" }}
+        style={{ marginLeft: comment.depth < 5 && comment.depth > 0 && "30px" }}
       >
         <CommentCard
           key={comment._id}
@@ -82,12 +82,15 @@ function CommentSection() {
           t={t}
         >
           {comment.children.length > 0 && (
-            <div style={{ marginLeft: comment.depth < 5 && "30px" }}>
-              {renderComments(comment.children)}
-            </div>
+            <>{renderComments(comment.children)}</>
           )}
           {replyToCommentId === comment._id && (
-            <FormWrapper>
+            <div
+              style={{
+                marginLeft:
+                  comment.depth < 5 && comment.children.length && "30px",
+              }}
+            >
               {select.exists ? (
                 <CommentForm
                   title={t("comment.title.reply")}
@@ -102,18 +105,14 @@ function CommentSection() {
               ) : (
                 <AuthReminder withCancel={true} t={t} />
               )}
-            </FormWrapper>
+            </div>
           )}
         </CommentCard>
-      </FormWrapper>
+      </div>
     ));
   }
 
   const commentsTree = buildCommentHierarchy(select.comments);
-  const comm = treeToList(listToTree(select.comments));
-  console.log("commentTreeCurr", commentsTree);
-  console.log("commentTreeNew", comm);
-
   const renderedComments = renderComments(commentsTree);
 
   return (

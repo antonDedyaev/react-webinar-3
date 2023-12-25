@@ -29,11 +29,7 @@ function CommentForm({
           {t("comment.submitBtn")}
         </button>
         {withCancel && (
-          <button
-            type="button"
-            onClick={onCancel}
-            disabled={!text.trim().length}
-          >
+          <button type="button" onClick={onCancel}>
             {t("comments.cancel")}
           </button>
         )}
