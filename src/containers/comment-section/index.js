@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import useTranslate from "../../hooks/use-translate";
 import { useParams } from "react-router-dom";
 import CommentsHeader from "../../components/comments-header";
@@ -31,6 +31,12 @@ function CommentSection() {
     }),
     shallowEqual
   );
+
+  const [initCount, setInitCount] = useState(select.count);
+
+  useEffect(() => {
+    setInitCount();
+  }, [select.comments]);
 
   const callbacks = {
     onChange: useCallback(
@@ -117,7 +123,7 @@ function CommentSection() {
 
   return (
     <CommentsLayout>
-      <CommentsHeader count={select.count} t={t} />
+      <CommentsHeader count={select.comments.length} t={t} />
       {renderedComments}
       {!replyToCommentId && (
         <FormWrapper>
